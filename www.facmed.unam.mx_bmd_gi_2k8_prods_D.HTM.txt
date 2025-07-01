@@ -1,0 +1,35 @@
+Titulo: D
+
+DESMOPRESINA.Solución nasal para nebulizar y solución inyectable.
+
+DEXAMETASONA.Solución inyectable.
+
+DEXAMETASONA.Solución oftálmica.
+
+DEXTROMETORFANO.Jarabe.
+
+DEXTROPROPOXIFENO.Cápsulas.
+
+DIAZEPAM.Solución inyectable.
+
+DIAZÓXIDO.Solución inyectable.
+
+DICLOFENACO.Solución inyectable y grageas de liberación prolongada.
+
+DICLOFENACO.Solución oftálmica.
+
+DICLOXACILINA.Cápsulas, solución inyectable y suspensión oral.
+
+DIFENHIDRAMINA.Jarabe, 
+  solución inyectable.
+
+DIFENIDOL.Solución inyectable, tabletas.
+
+DILTIAZEM.Grageas.
+
+DOBUTAMINA.Solución inyectable.
+
+DOPAMINA.Solución inyectable.
+
+DOXICICLINA.Cápsulas.
+

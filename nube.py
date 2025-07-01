@@ -1,24 +1,99 @@
-from pyairtable.orm import Model
-from pyairtable.orm import fields as F
-# api = Api("patZ5sBuu9dTkmFIF.b3d039f74edf64dff74ba8584c30a35c0cb571c7a0b54dab7d6415de8437659c")#clave de acceso
-# table = api.table("apptDDJ9LFD0VB3Jt", "receta")
+import flet as ft
+import modelo as md
 
-# medicamento = {
-#     "medicamento" : "Amlodipino",
-#     "interacciones" : "Evitar picante y gaseosas"
-# }
+def main(page: ft.Page):
 
-# table.create(medicamento)
-# datos = table.all()
+    def actualizar_datos(e: ft.ControlEvent):
+        nombre = drp_medicamentos.value.strip()
+        if nombre == "":
+            return
+        
+        medicamento = md.Medicamento.select().where(md.Medicamento.descripcion == nombre).first()
 
-# for d in datos:
-#     print(d['fields'])
+        if medicamento:
+            txt_clave.value = medicamento.clave
+            txt_presentacion.value = medicamento.presentacion
+            txt_clasificacion.value = medicamento.clasificacion
+            txt_nivel_atencion.value = medicamento.nivel_atencion
+            txt_farmaco.value = medicamento.nombre_farmaco
+            page.update()
 
-class Receta(Model):
-    medicamento = F.TextField("medicamento")
-    interacciones = F.TextField("interacciones")
-    class Meta:
-        api_key = "patZ5sBuu9dTkmFIF.b3d039f74edf64dff74ba8584c30a35c0cb571c7a0b54dab7d6415de8437659c"
-        base_id = "apptDDJ9LFD0VB3Jt"
-        table_name = "receta"
+    def borrar_medicamento(e: ft.ControlEvent):
+        nombre = drp_medicamentos.value.strip()
+        if nombre == "":
+            snack_bar = ft.SnackBar(ft.Text("Introduce el nombre"))
+            page.snack_bar = snack_bar
+            snack_bar.open = True
+            page.update()
+            return
+
+        md.Medicamento.delete().where(md.Medicamento.descripcion == nombre).execute()
+        snack_bar = ft.SnackBar(ft.Text("Borrado correctamente"), bgcolor="blue", show_close_icon=True)
+        page.snack_bar = snack_bar
+        snack_bar.open = True
+
+        txt_clave.value = ""
+        txt_presentacion.value = ""
+        txt_clasificacion.value = ""
+        txt_nivel_atencion.value = ""
+        txt_farmaco.value = ""
+        drp_medicamentos.value = None
+        page.update()
+
+    # Configuración de la página
+    page.title = "Baja de medicamentos (UJAT)"
+    page.theme_mode = "light"
+    page.appbar = ft.AppBar(
+        leading=ft.Icon(name="folder_delete", color=ft.Colors.WHITE),
+        title=ft.Text("Baja medicamento"),
+        bgcolor="green",
+        color="white"
+    )
+
+    # Obtener medicamentos de la base
+    lista = []
+    medicamentos = md.Medicamento.select(md.Medicamento.descripcion).distinct()
+    for med in medicamentos:
+        lista.append(ft.dropdown.Option(med.descripcion))
+
+    # Componentes
+    drp_medicamentos = ft.Dropdown(
+        options=lista,
+        width=550,
+        label="Nombre del medicamento",
+        on_change=actualizar_datos
+            )
+
+    txt_clave = ft.TextField(width=250, border="underline", filled=True, label="Clave", read_only=True)
+    txt_presentacion = ft.TextField(label="Presentación", multiline=True, min_lines=1, max_lines=3, read_only=True)
+    txt_clasificacion = ft.TextField(width=550, label="Clasificación", read_only=True)
+    txt_nivel_atencion = ft.TextField(width=550, label="Nivel de atención", read_only=True)
+    txt_farmaco = ft.TextField(width=550, label="Fármaco o sustancia activa", read_only=True)
+
+    btn_Borrar = ft.Container(
+        content=ft.ElevatedButton(
+            text="Borrar",
+            icon="delete_forever_rounded",
+            icon_color="white",
+            bgcolor="red",
+            color="white",
+            width=150,
+            on_click=borrar_medicamento
+        ),
+        alignment=ft.alignment.center
+    )
+
+    page.add(
+        drp_medicamentos,
+        txt_clave,
+        txt_presentacion,
+        txt_clasificacion,
+        txt_nivel_atencion,
+        txt_farmaco,
+        btn_Borrar
+    )
+    page.update()
+
+if __name__ == "__main__":
+    ft.app(target=main, view=ft.AppView.WEB_BROWSER)
 

@@ -41,7 +41,7 @@ def main(page: ft.Page):
     page.title = "Baja de medicamentos (UJAT)"
     page.theme_mode = "light"
     page.appbar = ft.AppBar(
-        leading=ft.Icon(name='folder_delete_sharp', color=ft.colors.WHITE),
+        leading=ft.Icon(name='folder_delete_sharp', color=ft.Colors.WHITE),
         title=ft.Text("Baja medicamento"),
         bgcolor="green",
         color="white"

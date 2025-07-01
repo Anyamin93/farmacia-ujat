@@ -18,7 +18,7 @@ docutils==0.20.1
 et-xmlfile==1.1.0
 exceptiongroup==1.2.0
 firebase-admin==6.5.0
-flet==0.27.6
+flet==0.20.2
 flet-core==0.20.2
 flet-runtime==0.20.2
 google-api-core==2.19.0

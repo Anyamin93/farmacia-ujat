@@ -1,8 +1,8 @@
+import os
 import flet as ft
 import consulta_airtable as cat
 import consultas as cm
 import alta_medicamentos as alta_medicamentos
-
 
 def main(page: ft.Page):
 
@@ -14,7 +14,6 @@ def main(page: ft.Page):
         page.clean()
         cm.main(page)
         
-
     page.title = "FARMI-UJAT"
     page.appbar = ft.AppBar(
         title = ft.Text("FARMI-UJAT", size=40),
@@ -87,22 +86,22 @@ def main(page: ft.Page):
     )
 
     btn_container = ft.Container(
-    content=ft.Row(
-        controls=[
-            btn_interacciones,
-            btn_medicamento,
-            btn_lista
-        ],
-        alignment=ft.MainAxisAlignment.CENTER,
-        spacing=30
-    ),
-    alignment=ft.alignment.center
-)
+        content=ft.Row(
+            controls=[
+                btn_interacciones,
+                btn_medicamento,
+                btn_lista
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
+            spacing=30
+        ),
+        alignment=ft.alignment.center
+    )
 
     page.add(ft.Divider(color="black"), btn_container)
     page.update()
     #nuevo medicamento y listado de medicamentos
 
 if __name__ == "__main__":
-    ft.app(target=main, view=ft.AppView.WEB_BROWSER)
-#flet tun -w main.py
+    port = int(os.environ.get("PORT", 8550))
+    ft.app(target=main, port=port)

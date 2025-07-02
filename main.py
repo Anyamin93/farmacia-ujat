@@ -1,6 +1,7 @@
 import flet as ft
 import consulta_airtable as cat
 import consultas as cm
+import alta_medicamentos as alta_medicamentos
 
 
 def main(page: ft.Page):
